@@ -1,0 +1,5 @@
+ctranslate2>=4.1.0
+nltk>=3.8.0
+sentencepiece>=0.1.99
+fairseq
+transformers==4.30.2
