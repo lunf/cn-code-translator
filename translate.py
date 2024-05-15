@@ -5,6 +5,7 @@ import time
 from time import strftime
 from time import gmtime
 
+excluded_ext_list = ['hpi', 'ico', 'jpg', 'gif', 'svg', 'png', 'gitignore', 'docx', 'doc']
 
 model = M2M100ForConditionalGeneration.from_pretrained("facebook/m2m100_418M")
 tokenizer = M2M100Tokenizer.from_pretrained("facebook/m2m100_418M")
@@ -71,7 +72,10 @@ def get_filepaths(directory):
     # Walk the tree.
     for root, directories, files in os.walk(directory):
         for filename in files:
-            if filename.endswith(".ico") or filename.endswith(".jpg") or filename.endswith(".gif") or filename.endswith(".svg") or filename.endswith(".png") or filename.endswith(".gitignore") or filename.endswith(".docx"):
+            # Get file extension
+            extension = os.path.splitext(filename)[1]
+            # Check in the excluded list
+            if bool([val for val in excluded_ext_list if(val in extension)]):
                 continue
             # Join the two strings in order to form the full filepath.
             filepath = os.path.join(root, filename)
@@ -84,7 +88,7 @@ def get_filepaths(directory):
 def translate_project():
     start = time.time()
     # specify folder
-    folder = '/home/username/Documents/github/source'
+    folder = '/home/username/Documents/github/folder'
     # get files
     full_file_paths = get_filepaths(folder)
 
